@@ -6,7 +6,16 @@
 
     <groupId>top.damoncai</groupId>
     <artifactId>springboot-example-damoncai-V2</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>SpringBoot-Swagger</module>
+    </modules>
 
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 </project>
