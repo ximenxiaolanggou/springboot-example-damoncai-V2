@@ -1,0 +1,51 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /server
+spring:
+  application:
+    name: springboot-manyDataSources
+  datasource:
+    p6spy: true
+    dynamic:
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 1800000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+        pool-name: HikariCP
+      primary: mysql
+      datasource:
+        mysql:
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          url: jdbc:p6spy:mysql://localhost:3306/pmes?characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+          username: root
+          password: zhishun.cai
+        #          url: jdbc:mysql://localhost:3306/ datasourceName?characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+        #          username: root
+        #          password: root
+        #          driver-class-name: com.mysql.cj.jdbc.Driver
+
+        sqlserver:
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+          url: jdbc:p6spy:sqlserver://localhost:1433;DatabaseName=test_db01
+          username: sa
+          password: zhishun.cai
+#          url: jdbc:sqlserver://localhost:1433;DatabaseName= datasourceName
+#          username: sa
+#          password: root
+#          driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+mybatis-plus:
+  type-aliases-package: top.damoncai.datasource.entity # 多个可用逗号隔开
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  global-config:
+    banner: false
+
+#日志
+logging:
+  level:
+    com.example.demo : debug
