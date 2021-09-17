@@ -10,6 +10,12 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>SpringBoot-Swagger</module>
+        <module>SpringBoot-DynamicDS_MySQL_SQLServer</module>
+        <module>SpringBoot-Extra</module>
+        <module>SpringBoot-EasyExcel</module>
+        <module>SpringBoot-Maven-Nexus</module>
+        <module>SpringBoot-Quartz</module>
+        <module>LeiLei</module>
     </modules>
 
     <parent>
@@ -18,4 +24,31 @@
         <version>2.3.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources/profile/${env}</directory>
+                <includes>
+                    <include>application.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.xlsx</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>

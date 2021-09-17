@@ -1,0 +1,8 @@
+spring:
+  mvc:
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static/
+
+server:
+  port: 10000

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html {
+            perspective: 800px
+        }
+        div {
+            width: 300px;
+            height: 300px;
+        }
+        .par {
+            width: 200px;
+            height: 200px;
+            margin: 175px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 15s alternate infinite linear;
+        }
+        .p1 {
+            background: url("../static/images/6.jpg");
+            position: absolute;
+            transform: rotateY(90deg) translateZ(150px);
+        }
+        .p2 {
+            background: url("../static/images/2.jpg");
+            position: absolute;
+            transform: rotateY(-90deg) translateZ(150px);
+        }
+        .p3 {
+            background: url("../static/images/3.jpg");
+            position: absolute;
+            transform: rotateX(90deg) translateZ(150px);
+        }
+        .p4 {
+            background: url("../static/images/4.jpg");
+            position: absolute;
+            transform: rotateX(-90deg) translateZ(150px);
+        }
+        .p5 {
+            background: url("../static/images/5.jpg");
+            position: absolute;
+            transform: translateZ(-150px);
+        }
+        .p6 {
+            background: url("../static/images/1.jpg");
+            position: absolute;
+            transform: translateZ(150px);
+        }
+        @keyframes rotate {
+            form{
+                transform:rotateX(0) rotateZ(0) rotateY(0)
+            }
+
+            to{
+                transform:rotateX(1turn) rotateZ(1turn) rotateY(1turn)
+            }
+        }
+    </style>
+</head>
+<body>
+<audio style="visibility: hidden" src="http://gc.sycdn.kuwo.cn/5df02f5ec3916e8a5ac654fc12deb3df/61225a56/resource/n3/9/47/4227726035.mp3" controls autoplay loop id="vd"></audio>
+<div class="par">
+    <div class="p1"></div>
+    <div class="p2"></div>
+    <div class="p3"></div>
+    <div class="p4"></div>
+    <div class="p5"></div>
+    <div class="p6"></div>
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function(){
+        setInterval("toggleSound()",100);
+    }
+
+    function toggleSound() {
+        var music = document.getElementById("vd");//获取ID
+
+        if (music.paused) { //判读是否播放
+            music.paused=false;
+            music.play(); //没有就播放
+        }
+    }
+</script>
+</html>
