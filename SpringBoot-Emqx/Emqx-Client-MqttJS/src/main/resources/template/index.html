@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mqtt.js测试</title>
+    <style type="text/css">
+        div{
+            width: 300px;
+            height: 300px;
+            float: left;
+            border: red solid 1px;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js" ></script>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" ></script>
+    <script type="text/javascript">
+        $(function () {
+            //页面加载完成后
+            // 连接选项
+            const options = {
+                clean: true, // 保留回话
+                connectTimeout: 4000, // 超时时间
+            // 认证信息
+                clientId: 'emqx_client_h5',
+                username: 'damoncai',
+                password: 'damoncai',
+            }
+            // 连接字符串, 通过协议指定使用的连接方式
+            // ws 未加密 WebSocket 连接 8083端口
+            // wss 加密 WebSocket 连接 8084端口
+            // mqtt 未加密 TCP 连接
+            // mqtts 加密 TCP 连接
+            // wxs 微信小程序连接
+            // alis 支付宝小程序连接
+            const connectUrl = 'ws://150.158.78.149:8083/mqtt'
+            const client = mqtt.connect(connectUrl, options)
+            /**
+             * mqtt.Client相关事件
+             */
+            //当重新连接启动触发回调
+            client.on('reconnect', () => {
+                $("#div1").text("正在重连.....");
+            });
+            //连接断开后触发的回调
+            client.on("close",function () {
+                $("#div1").text("客户端已断开连接.....");
+            });
+            //从broker接收到断开连接的数据包后发出。MQTT 5.0特性
+            client.on("disconnect",function (packet) {
+                $("#div1").text("从broker接收到断开连接的数据包....."+packet);
+            });
+            //客户端脱机下线触发回调
+            client.on("offline",function () {
+                $("#div1").text("客户端脱机下线.....");
+            });
+            //当客户端无法连接或出现错误时触发回调
+            client.on("error",(error) =>{
+                $("#div1").text("客户端出现错误....."+error);
+            });
+            //以下两个事件监听粒度细
+            //当客户端发送任何数据包时发出。这包括published()包以及MQTT用于管理订阅和连接的包
+            client.on("packetsend",(packet)=>{
+                $("#div1").text("客户端已发出数据包....."+packet);
+            });
+            //当客户端接收到任何数据包时发出。这包括来自订阅主题的信息包以及MQTT用于管理订阅和连接的信息包
+            client.on("packetreceive",(packet)=>{
+                $("#div1").text("客户端已收到数据包....."+packet);
+            });
+            //成功连接后触发的回调
+            client.on("connect",function (connack) {
+                $("#div1").text("成功连接上服务器"+new Date());
+                //订阅某主题
+                /**
+                 * client.subscribe(topic/topic array/topic object, [options], [callback])
+                 * topic:一个string类型的topic或者一个topic数组,也可以是一个对象
+                 * options
+                 */
+                client.subscribe("testtopic/#",{qos:2});
+                //每隔2秒发布一次数据
+                setInterval(publish,2000)
+            });
+            function publish() {
+
+                //发布数据
+                /**
+                 * client.publish(topic,message,[options], [callback])
+                 *
+                 * message: Buffer or String
+                 * options:{
+                 * qos:0, //默认0
+                 * retain:false, //默认false
+                 * dup:false, //默认false
+                 * properties:{}
+                 * }
+                 * callback:function (err){}
+                 */
+                const message = "h5 message "+Math.random()+new Date();
+                client.publish("testtopic/123",message,{qos:2});
+                $("#div2").text("客户端发布了数据:"+message);
+            }
+            //当客户端接收到发布消息时触发回调
+            /**
+             * topic:收到的数据包的topic
+             * message:收到的数据包的负载playload
+             * packet:收到的数据包
+             */
+            client.on('message', (topic, message,packet) => {
+                $("#div3").text("客户端收到订阅消息,topic="+topic+";消息数据:"+message+";数据包:"+packet);
+            });
+            //页面离开自动断开连接
+            $(window).bind("beforeunload",()=>{
+                $("#div1").text("客户端窗口关闭,断开连接");
+                client.disconnect();
+            })
+        })
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+</body>
+</html>
