@@ -1,10 +1,7 @@
 package top.damoncai.minio;
 
 
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.UploadObjectArgs;
+import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
 import org.junit.Before;
@@ -67,7 +64,14 @@ public class Demo {
      * 上传
      */
     @Test
-    public void upload() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+    public void upload() throws Exception {
+        UploadObjectArgs uploadObjectArgs = UploadObjectArgs
+                .builder()
+                .bucket("test")
+                .object("hello/a.jpg")
+                .filename("d:\\2.png")
+                .build();
+        minioClient.uploadObject(uploadObjectArgs);
     }
 
 }
