@@ -25,6 +25,9 @@ public class EmqClient {
 
     private IMqttClient mqttClient;
 
+    private final String USERNAME = "damoncai";
+    private final String PASSWORD = "damoncai";
+
     @Autowired
     private MqttProperties mqttProperties;
 
@@ -39,6 +42,11 @@ public class EmqClient {
             mqttClient = new MqttClient(mqttProperties.getBrokerUrl(),mqttProperties.getClientId(),memoryPersistence);
         } catch (MqttException e) {
             log.error("MqttClient初始化失败,brokerurl={},clientId={}",mqttProperties.getBrokerUrl(),mqttProperties.getClientId());
+        }
+        try {
+            connect(USERNAME,PASSWORD);
+        }catch (Exception e) {
+            log.error(e.getMessage());
         }
     }
 
@@ -59,7 +67,7 @@ public class EmqClient {
          端收不到消息
          * 解决该问题有两种方案:1.连接断开后不要保持；2.保证每个客户端有固定的clientId
          */
-        connectOptions.setCleanSession(true);
+        connectOptions.setCleanSession(false);
         connectOptions.setUserName(username);
         connectOptions.setPassword(password.toCharArray());
         //设置mqtt消息回调

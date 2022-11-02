@@ -17,6 +17,8 @@
         <module>SpringBoot-Quartz</module>
         <module>LeiLei</module>
         <module>SpringBoot-Emqx</module>
+        <module>SpringBoot-Pushgateway</module>
+        <module>SpringBoot-MinIO</module>
     </modules>
 
     <parent>

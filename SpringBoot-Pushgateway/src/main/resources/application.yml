@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: local-test
+
+moldingstar:
+  pushgateway:
+    enable: true
+    job-name: ${spring.application.name}
+    address: '192.168.111.12:9091'
+    labels:
+      - 'label_A'
+      - 'label_B'
