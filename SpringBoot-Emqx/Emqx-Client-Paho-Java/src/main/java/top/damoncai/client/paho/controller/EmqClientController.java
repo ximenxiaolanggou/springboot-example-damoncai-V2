@@ -40,19 +40,11 @@ public class EmqClientController {
      */
     @GetMapping("publish")
     public String publish(@RequestParam String msg) {
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    emqClient.publish("testtopic/123",msg, QosEnum.QoS2,false);
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
+        try {
+            emqClient.publish("testtopic",msg, QosEnum.QoS2,false);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return "消息发送成功 ~~";
     }
 
@@ -62,7 +54,7 @@ public class EmqClientController {
      */
     @GetMapping("subscribe")
     public String subscribe() {
-        emqClient.subscribe("testtopic/#", QosEnum.QoS2);
+        emqClient.subscribe("testtopic", QosEnum.QoS2);
         return "消息订阅成功 ~~";
     }
 

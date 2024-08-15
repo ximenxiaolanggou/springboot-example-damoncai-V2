@@ -199,4 +199,15 @@ public class Demo {
         System.out.println(presignedObjectUrl);
     }
 
+    /**
+     * 删除对象
+     * @throws Exception
+     */
+    @Test
+    public void removeObj() throws Exception {
+        RemoveObjectArgs args = RemoveObjectArgs.builder().bucket("13236128814").object("ll/位置度2.xlsx").build();
+        minioClient.removeObject(args);
+    }
+
+
 }

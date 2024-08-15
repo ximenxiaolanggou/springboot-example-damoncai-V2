@@ -19,6 +19,7 @@
         <module>SpringBoot-Emqx</module>
         <module>SpringBoot-Pushgateway</module>
         <module>SpringBoot-MinIO</module>
+        <module>SpringBoot-DataMatrix</module>
     </modules>
 
     <parent>

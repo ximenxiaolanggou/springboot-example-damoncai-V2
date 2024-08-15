@@ -1,5 +1,5 @@
 mqtt:
-  broker-url: tcp://150.158.78.149:1883
+  broker-url: tcp://127.0.0.1:1883
   client-id: demo-client
   username: damoncai
   password: damoncai
